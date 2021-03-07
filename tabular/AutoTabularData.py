@@ -25,7 +25,6 @@ class AutoTabularData:
         self.model_pipeline = None
         self.best_estimator = None
         self.best_pipeline = None
-        self.total_features = None
 
     def _clean_transform_data(self, X_train):
         #Create a pipeline to fill NaN values with the columns mean value and scale all the values with StandardScaler()
@@ -59,7 +58,6 @@ class AutoTabularData:
         model_pipeline = Pipeline(model_pipeline_steps)
 
         self.model_pipeline = model_pipeline
-        self.total_features = preprocessor.fit_transform(X_train).shape[1]
 
     def _model_selector_hyperparameter_tuning(self, X_train, y_train):
         pass
