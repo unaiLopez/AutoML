@@ -1,4 +1,4 @@
-from modules.tabular.AutoTabularDataClassifier import AutoTabularDataClassifier
+from tabular.AutoTabularDataClassifier import AutoTabularDataClassifier
 
 from sklearn.datasets import load_breast_cancer
 from sklearn.metrics import balanced_accuracy_score

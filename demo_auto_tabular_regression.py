@@ -1,4 +1,4 @@
-from modules.tabular.AutoTabularDataRegressor import AutoTabularDataRegressor
+from tabular.AutoTabularDataRegressor import AutoTabularDataRegressor
 
 from sklearn.datasets import load_boston
 from sklearn.metrics import mean_squared_error

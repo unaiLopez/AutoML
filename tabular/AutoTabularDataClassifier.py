@@ -13,7 +13,7 @@ from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.svm import SVC, SVR
 from sklearn.decomposition import PCA, KernelPCA, IncrementalPCA
 
-from modules.tabular.AutoTabularData import AutoTabularData
+from tabular.AutoTabularData import AutoTabularData
 
 class AutoTabularDataClassifier(AutoTabularData):
 

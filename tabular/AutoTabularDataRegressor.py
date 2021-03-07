@@ -14,7 +14,7 @@ from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.svm import SVC, SVR
 from sklearn.decomposition import PCA, KernelPCA, IncrementalPCA
 
-from modules.tabular.AutoTabularData import AutoTabularData
+from tabular.AutoTabularData import AutoTabularData
 
 class AutoTabularDataRegressor(AutoTabularData):
     def __init__(self, scoring_function='neg_mean_squared_error', n_jobs=-1, n_iterations=50, cv=5):
