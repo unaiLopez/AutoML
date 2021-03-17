@@ -16,7 +16,7 @@ from sklearn.decomposition import PCA, KernelPCA, IncrementalPCA
 from tabular.AutoTabularData import AutoTabularData
 
 class AutoTabularDataClassifier(AutoTabularData):
-
+    
     def __init__(self, scoring_function='balanced_accuracy', n_jobs=-1, n_iterations=50, cv=5):
         super().__init__(scoring_function, n_jobs, n_iterations, cv)
 
@@ -60,7 +60,7 @@ class AutoTabularDataClassifier(AutoTabularData):
 
         #Random Forest
         optimization_grid.append({
-            'preprocessor__numerical__scaler': scalers,
+            'preprocessor__numerical__scaler': [None],
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
             'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [RandomForestClassifier(random_state=0)],
@@ -73,7 +73,7 @@ class AutoTabularDataClassifier(AutoTabularData):
 
         #Gradient boosting
         optimization_grid.append({
-            'preprocessor__numerical__scaler': scalers,
+            'preprocessor__numerical__scaler': [None],
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
             'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [GradientBoostingClassifier(random_state=0)],
@@ -84,7 +84,7 @@ class AutoTabularDataClassifier(AutoTabularData):
 
         #Ada boosting
         optimization_grid.append({
-            'preprocessor__numerical__scaler': scalers,
+            'preprocessor__numerical__scaler': [None],
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
             'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [AdaBoostClassifier(random_state=0)],
@@ -131,6 +131,9 @@ class AutoTabularDataClassifier(AutoTabularData):
         self.best_pipeline = search.best_params_
 
     def fit(self, X_train, y_train):
+        X_train = self.source_data_adapter.adapt_source_data(X_train)
+        y_train = self.source_data_adapter.adapt_source_data(y_train)
+
         self._clean_transform_data(X_train)
         train_y = self._encode_target_categorical_variables(y_train)
         self._model_selector_hyperparameter_tuning(X_train, y_train)

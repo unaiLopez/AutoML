@@ -15,6 +15,8 @@ from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from sklearn.svm import SVC, SVR
 from sklearn.decomposition import PCA
 
+from utils.SourceDataAdapter import SourceDataAdapter
+
 class AutoTabularData:
 
     def __init__(self, scoring_function, n_jobs, n_iterations, cv):
@@ -22,6 +24,7 @@ class AutoTabularData:
         self.n_jobs = n_jobs
         self.n_iterations = n_iterations
         self.cv = cv
+        self.source_data_adapter = SourceDataAdapter()
         self.model_pipeline = None
         self.best_estimator = None
         self.best_pipeline = None
@@ -66,4 +69,6 @@ class AutoTabularData:
         pass
 
     def predict(self, X_test):
-        return self.best_estimator.predict(X_test) 
+        X_test = self.source_data_adapter.adapt_source_data(X_test)
+
+        return self.best_estimator.predict(X_test)

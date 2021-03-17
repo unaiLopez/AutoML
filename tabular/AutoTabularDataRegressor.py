@@ -17,6 +17,7 @@ from sklearn.decomposition import PCA, KernelPCA, IncrementalPCA
 from tabular.AutoTabularData import AutoTabularData
 
 class AutoTabularDataRegressor(AutoTabularData):
+    
     def __init__(self, scoring_function='neg_mean_squared_error', n_jobs=-1, n_iterations=50, cv=5):
         super().__init__(scoring_function, n_jobs, n_iterations, cv)
 
@@ -52,7 +53,7 @@ class AutoTabularDataRegressor(AutoTabularData):
 
         #Random Forest
         optimization_grid.append({
-            'preprocessor__numerical__scaler': scalers,
+            'preprocessor__numerical__scaler': [None],
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
             'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [RandomForestRegressor(random_state=0)],
@@ -65,7 +66,7 @@ class AutoTabularDataRegressor(AutoTabularData):
 
         #Gradient boosting
         optimization_grid.append({
-            'preprocessor__numerical__scaler': scalers,
+            'preprocessor__numerical__scaler': [None],
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
             'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [GradientBoostingRegressor(random_state=0)],
@@ -77,7 +78,7 @@ class AutoTabularDataRegressor(AutoTabularData):
 
         #Ada boosting
         optimization_grid.append({
-            'preprocessor__numerical__scaler': scalers,
+            'preprocessor__numerical__scaler': [None],
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
             'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [AdaBoostRegressor(random_state=0)],
@@ -126,6 +127,9 @@ class AutoTabularDataRegressor(AutoTabularData):
         self.best_pipeline = search.best_params_
 
     def fit(self, X_train, y_train):
+        X_train = self.source_data_adapter.adapt_source_data(X_train)
+        y_train = self.source_data_adapter.adapt_source_data(y_train)
+        
         self._clean_transform_data(X_train)
         self._model_selector_hyperparameter_tuning(X_train, y_train)
     
