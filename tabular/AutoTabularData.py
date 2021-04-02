@@ -56,7 +56,6 @@ class AutoTabularData:
         
         model_pipeline_steps = list()
         model_pipeline_steps.append(('preprocessor', preprocessor))
-        model_pipeline_steps.append(('dimensionality_reduction', PCA()))
         model_pipeline_steps.append(('estimator', LogisticRegression()))
         model_pipeline = Pipeline(model_pipeline_steps)
 

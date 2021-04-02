@@ -11,8 +11,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression, LinearRegression, SGDRegressor, SGDClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, RandomForestRegressor, GradientBoostingRegressor, AdaBoostClassifier, AdaBoostRegressor
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.decomposition import PCA, KernelPCA, IncrementalPCA
+from sklearn.svm import SVR
 
 from tabular.AutoTabularData import AutoTabularData
 
@@ -34,7 +33,6 @@ class AutoTabularDataRegressor(AutoTabularData):
         optimization_grid.append({
             'preprocessor__numerical__scaler': scalers,
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
-            'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [LinearRegression()]
         })
 
@@ -42,7 +40,6 @@ class AutoTabularDataRegressor(AutoTabularData):
         optimization_grid.append({
             'preprocessor__numerical__scaler': scalers,
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
-            'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [KNeighborsRegressor()],
             'estimator__weights': ['uniform','distance'],
             'estimator__algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
@@ -55,7 +52,6 @@ class AutoTabularDataRegressor(AutoTabularData):
         optimization_grid.append({
             'preprocessor__numerical__scaler': [None],
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
-            'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [RandomForestRegressor(random_state=0)],
             'estimator__n_estimators': np.arange(100, 1000, 10),
             'estimator__criterion':['mse','mae'],
@@ -68,7 +64,6 @@ class AutoTabularDataRegressor(AutoTabularData):
         optimization_grid.append({
             'preprocessor__numerical__scaler': [None],
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
-            'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [GradientBoostingRegressor(random_state=0)],
             'estimator__n_estimators': np.arange(5,500,10),
             'estimator__learning_rate': np.linspace(0.1, 0.9, 20),
@@ -80,7 +75,6 @@ class AutoTabularDataRegressor(AutoTabularData):
         optimization_grid.append({
             'preprocessor__numerical__scaler': [None],
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
-            'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [AdaBoostRegressor(random_state=0)],
             'estimator__n_estimators': np.arange(50, 1000, 10),
             'estimator__learning_rate': np.linspace(0.01, 0.9, 20),
@@ -91,7 +85,6 @@ class AutoTabularDataRegressor(AutoTabularData):
         optimization_grid.append({
             'preprocessor__numerical__scaler': scalers,
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
-            'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [SVR()],
             'estimator__kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
             'estimator__gamma': ['scale', 'auto'],
@@ -103,7 +96,6 @@ class AutoTabularDataRegressor(AutoTabularData):
         optimization_grid.append({
             'preprocessor__numerical__scaler': scalers,
             'preprocessor__numerical__cleaner__strategy': clean_strategies,
-            'dimensionality_reduction': [None, PCA(), KernelPCA(), IncrementalPCA()],
             'estimator': [SGDRegressor(random_state=0)],
             'estimator__loss': ['squared_loss', 'huber', 'epsilon_insensitive', 'squared_epsilon_insensitive'],
             'estimator__penalty': ['l2', 'l1', 'elasticnet'],
